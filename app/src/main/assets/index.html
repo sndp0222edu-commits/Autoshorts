@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AntiGem 2D - Antigravity Engine</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <!-- Header bar -->
+    <div class="header-bar">
+        <div class="brand">
+            <div class="brand-icon">✦</div>
+            <span class="brand-title">AntiGem 2D</span>
+            <span class="brand-badge">ANTIGRAVITY</span>
+        </div>
+        <div class="status-pills">
+            <span id="particle-count" class="pill">0 ORBS</span>
+            <span id="fps-counter" class="pill active">60 FPS</span>
+        </div>
+    </div>
+
+    <!-- Quick Animation Presets -->
+    <div class="quick-chips-wrapper">
+        <div class="chip" data-preset="antigravity">🚀 import antigravity</div>
+        <div class="chip" data-preset="zerog">🌌 Zero-G Float</div>
+        <div class="chip" data-preset="vortex">🌀 Cosmic Vortex</div>
+        <div class="chip" data-preset="quantum">⚡ Quantum Sine Wave</div>
+        <div class="chip" data-preset="supernova">💥 Supernova Burst</div>
+        <div class="chip" data-preset="invert">🎈 Invert Gravity (-G)</div>
+    </div>
+
+    <!-- Bottom Action & Python Console -->
+    <div class="bottom-sheet">
+        <div class="sheet-toggle-bar">
+            <button id="toggle-editor" class="toggle-editor-btn">
+                <span>⚡ Python Script Console</span>
+            </button>
+            <button id="touch-toggle" class="touch-mode-btn">
+                Mode: Repel (Anti-G)
+            </button>
+        </div>
+
+        <!-- Collapsible Python Code Editor -->
+        <div id="editor-panel" class="editor-panel">
+            <div class="editor-header">
+                <span>PYTHON 3.11 RUNTIME (OFFLINE)</span>
+                <span id="gravity-readout">G: 0 m/s²</span>
+            </div>
+            <textarea id="python-code" spellcheck="false"># AntiGem 2D Antigravity Script
+import antigravity
+
+# Spawn custom floating orbs
+for i in range(25):
+    spawn(
+        x=center_x + random.uniform(-100, 100),
+        y=center_y + random.uniform(-100, 100),
+        vx=random.uniform(-4, 4),
+        vy=random.uniform(-6, -1),
+        radius=random.uniform(4, 9),
+        color="#00E5FF",
+        antigravity=True
+    )
+</textarea>
+            <div id="terminal-logs">⚡ AntiGem Antigravity runtime initialized. Ready.</div>
+        </div>
+
+        <div class="action-controls">
+            <button id="run-script" class="run-btn">
+                <span>▶ RUN PYTHON SCRIPT</span>
+            </button>
+            <button id="clear-btn" class="clear-btn">Clear</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="python-engine.js"></script>
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvasElem = document.getElementById('canvas');
+            const controller = new AntigravityCanvas(canvasElem);
+            window.canvasController = controller;
+
+            const engine = new PythonEngine(controller);
+            window.engine = engine;
+
+            const logBox = document.getElementById('terminal-logs');
+            engine.setOutputCallback((msg) => {
+                logBox.innerHTML = `<div>${msg}</div>` + logBox.innerHTML;
+            });
+
+            const editorPanel = document.getElementById('editor-panel');
+            const toggleBtn = document.getElementById('toggle-editor');
+            toggleBtn.addEventListener('click', () => {
+                editorPanel.classList.toggle('open');
+                controller.vibrate(15);
+            });
+
+            // Touch repel / attract toggle
+            const touchBtn = document.getElementById('touch-toggle');
+            touchBtn.addEventListener('click', () => {
+                if (controller.touchMode === 'repel') {
+                    controller.touchMode = 'attract';
+                    touchBtn.textContent = 'Mode: Attract (Gravity)';
+                    touchBtn.style.color = '#FF1744';
+                } else {
+                    controller.touchMode = 'repel';
+                    touchBtn.textContent = 'Mode: Repel (Anti-G)';
+                    touchBtn.style.color = '#00E5FF';
+                }
+                controller.vibrate(20);
+            });
+
+            // Run button
+            const codeInput = document.getElementById('python-code');
+            const runBtn = document.getElementById('run-script');
+            runBtn.addEventListener('click', () => {
+                controller.vibrate(25);
+                engine.run(codeInput.value);
+            });
+
+            // Clear button
+            const clearBtn = document.getElementById('clear-btn');
+            clearBtn.addEventListener('click', () => {
+                controller.vibrate(20);
+                controller.clear();
+                engine.log("Canvas cleared.");
+            });
+
+            // Quick preset chips
+            const presets = {
+                antigravity: `import antigravity\nset_gravity(-0.25)\nburst(center_x, center_y, 30)`,
+                zerog: `set_gravity(0)\nfor i in range(35):\n    spawn(x=center_x, y=center_y, vx=random.uniform(-4, 4), vy=random.uniform(-4, 4), color="#00E5FF", radius=5)`,
+                vortex: `set_gravity(0)\ncreate_vortex(center_x, center_y, 2.5)\nfor i in range(40):\n    spawn(x=center_x + random.uniform(-150, 150), y=center_y + random.uniform(-150, 150), vx=random.uniform(-3, 3), vy=random.uniform(-3, 3), color="#7C4DFF", radius=4)`,
+                quantum: `set_gravity(0)\nfor i in range(30):\n    spawn(x=i * 12, y=center_y + math.sin(i * 0.3) * 80, vx=2, vy=math.cos(i * 0.3) * 3, color="#00E676", radius=4)`,
+                supernova: `burst(center_x, center_y, 50)\nprint("Supernova burst triggered!")`,
+                invert: `set_gravity(-0.35)\nprint("Gravity inverted to -0.35 m/s²")`
+            };
+
+            document.querySelectorAll('.chip').forEach(chip => {
+                chip.addEventListener('click', () => {
+                    const presetName = chip.dataset.preset;
+                    if (presets[presetName]) {
+                        controller.vibrate(25);
+                        codeInput.value = presets[presetName];
+                        engine.run(presets[presetName]);
+                        document.getElementById('gravity-readout').textContent = `G: ${controller.gravity} m/s²`;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,275 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #0E1117;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #E6EDF3;
+}
+
+#canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Header UI */
+.header-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    background: linear-gradient(180deg, rgba(14, 17, 23, 0.85) 0%, rgba(14, 17, 23, 0) 100%);
+    pointer-events: none;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    pointer-events: auto;
+}
+
+.brand-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #00E5FF, #7C4DFF);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    color: #0E1117;
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.4);
+}
+
+.brand-title {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, #00E5FF, #FFFFFF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.brand-badge {
+    font-size: 10px;
+    background: rgba(0, 229, 255, 0.15);
+    color: #00E5FF;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 600;
+    border: 1px solid rgba(0, 229, 255, 0.3);
+}
+
+.status-pills {
+    display: flex;
+    gap: 8px;
+    pointer-events: auto;
+}
+
+.pill {
+    background: rgba(22, 27, 34, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    padding: 4px 10px;
+    border-radius: 14px;
+    font-size: 11px;
+    font-family: monospace;
+    color: #8B949E;
+}
+
+.pill.active {
+    color: #00E5FF;
+    border-color: rgba(0, 229, 255, 0.4);
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.2);
+}
+
+/* Controls Overlay */
+.quick-chips-wrapper {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    overflow-x: auto;
+    padding: 0 16px 8px 16px;
+    z-index: 10;
+    display: flex;
+    gap: 8px;
+    scrollbar-width: none;
+}
+.quick-chips-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.chip {
+    background: rgba(22, 27, 34, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    color: #C9D1D9;
+    padding: 6px 12px;
+    border-radius: 18px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.chip:active, .chip.selected {
+    background: #00E5FF;
+    color: #0E1117;
+    font-weight: 700;
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.5);
+}
+
+/* Bottom Bar & Python Console */
+.bottom-sheet {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(0deg, rgba(14, 17, 23, 0.95) 80%, rgba(14, 17, 23, 0) 100%);
+    padding: 12px 16px 20px 16px;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sheet-toggle-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.toggle-editor-btn {
+    background: rgba(22, 27, 34, 0.85);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    color: #00E5FF;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.touch-mode-btn {
+    background: rgba(22, 27, 34, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #8B949E;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+/* Editor Panel */
+.editor-panel {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+    background: #161B22;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.editor-panel.open {
+    display: flex;
+}
+
+.editor-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #8B949E;
+    font-family: monospace;
+}
+
+#python-code {
+    width: 100%;
+    height: 110px;
+    background: #0E1117;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #00E5FF;
+    font-family: "SF Mono", Consolas, Monaco, monospace;
+    font-size: 13px;
+    padding: 10px;
+    resize: none;
+    outline: none;
+    user-select: text;
+}
+
+#terminal-logs {
+    max-height: 55px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 11px;
+    color: #8B949E;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 6px 8px;
+    border-radius: 6px;
+    line-height: 1.4;
+}
+
+/* Action Controls */
+.action-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.run-btn {
+    flex: 1;
+    background: linear-gradient(135deg, #00E5FF, #00B0FF);
+    color: #0E1117;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 229, 255, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.run-btn:active {
+    transform: scale(0.98);
+}
+
+.clear-btn {
+    background: #21262D;
+    color: #C9D1D9;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+}
