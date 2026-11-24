@@ -143,7 +143,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         // Start Embedded Core Engine on port 4500 (No external Termux required!)
-        EmbeddedServer.start(4500)
+        try {
+            EmbeddedServer.start(4500)
+        } catch (t: Throwable) {
+            t.printStackTrace()
+        }
 
         setContent {
             MaterialTheme(
