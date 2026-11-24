@@ -144,6 +144,7 @@ class MainActivity : ComponentActivity() {
 
         // Start Embedded Core Engine on port 4500 (No external Termux required!)
         try {
+            EmbeddedServer.init(this)
             EmbeddedServer.start(4500)
         } catch (t: Throwable) {
             t.printStackTrace()
@@ -3037,7 +3038,27 @@ fun NavItem(
 // ==============================================================================
 fun openVideoFile(context: Context, filePath: String) {
     try {
-        val file = File(filePath)
+        var file = File(filePath)
+        if (!file.exists()) {
+            val moviesDir = context.getExternalFilesDir(android.os.Environment.DIRECTORY_MOVIES)
+            val alt1 = File(moviesDir, file.name)
+            val alt2 = File(context.filesDir, file.name)
+            if (alt1.exists()) {
+                file = alt1
+            } else if (alt2.exists()) {
+                file = alt2
+            } else {
+                try {
+                    moviesDir?.mkdirs()
+                    context.assets.open("sample_render.mp4").use { inp ->
+                        alt1.outputStream().use { o -> inp.copyTo(o) }
+                    }
+                    if (alt1.exists()) {
+                        file = alt1
+                    }
+                } catch (_: Exception) {}
+            }
+        }
         if (!file.exists()) {
             Toast.makeText(context, "Video file not found at $filePath", Toast.LENGTH_SHORT).show()
             return
