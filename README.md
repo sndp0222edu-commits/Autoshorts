@@ -1,66 +1,37 @@
-# AntiGem 2D - Antigravity Mobile App (Clone)
+# AutoShorts AI - Android Mobile App (Embedded Core Engine)
 
-Ek lightweight native Android app jo AntiGem ke sleek design aur limited features (**2D Animation using Python** aur **Antigravity Physics**) par focused hai.
-
----
-
-## 🚀 Features
-
-- **AntiGem Dark Native UI:** Sleek minimalist interface matching AntiGem (`#0E1117`).
-- **Antigravity & Zero-G Physics:**
-  - Real-time zero-gravity floating particles and rigid bodies.
-  - Interactive touch repulsion (Anti-G) and attraction (Gravity Vortex).
-  - Phone accelerometer sensor support: Device ko tilt karne se physical gravity shift hoti hai.
-- **Python 2D Animation Engine (Offline):**
-  - Live Python script execution console.
-  - Classic `import antigravity` XKCD easter egg (flying stickman animation).
-  - Support for mathematical particle waves, orbital vortices, and supernova bursts.
-- **Android Haptic Feedback:** Physical vibration effects on touch and particle interaction.
+AutoShorts AI - Complete native Android application featuring embedded Termux runtime, autonomous 2D animation rendering pipeline, Antigravity physics, and Claude skill plugin marketplace.
 
 ---
 
-## 📦 How to Build the APK (1-Click via GitHub Actions)
+## 🚀 Key Features
 
-Is project me **Automated GitHub Actions Workflow** pehle se set up hai:
+1. **Embedded Termux Core Engine (Port 4500):**
+   - Built directly into the Android application process via `EmbeddedServer.kt`.
+   - **No external Termux required!** The app runs autonomously without needing external scripts.
+   - Interactive bash shell console with command execution (`uptime`, `python`, `ls`, `free`, `clear`).
+   - Live system metrics chips (`Node: v26 (Embedded)`, `FFmpeg: Ready`, `Disk: Storage OK`).
 
-1. **GitHub par naya repository banayein** (e.g. `antigem-mini`).
-2. Isi folder ko GitHub par push kar dein:
-   ```bash
-   cd /data/user/0/ai.antigem/files/home/.gemini/antigravity-cli/scratch/antigem-mini
-   git init
-   git add .
-   git commit -m "Initial AntiGem 2D App"
-   git remote add origin https://github.com/YOUR_USERNAME/antigem-mini.git
-   git branch -M main
-   git push -u origin main
-   ```
-3. **Download APK:**
-   - GitHub repo open karein -> **Actions** tab par jayein.
-   - `Build AntiGem 2D APK` workflow run hoga.
-   - 2-3 minute me **Artifacts** section me `AntiGem-Mini-2D-Debug-APK` mil jayega.
-   - Download karke apne phone me direct install kar lijiye!
+2. **Autonomous 2D Animation & Antigravity Pipeline:**
+   - Step-by-step pipeline tracker: `Script -> Voice -> 2D Canvas Animation -> Antigravity Physics -> Render MP4`.
+   - Real-time terminal log stream during video generation.
+   - AI Auto-fix and retry capabilities.
+
+3. **Templates & 62 Plugin Marketplace:**
+   - **Antigravity 2D Animation** (Zero-G Floating Physics & Python XKCD).
+   - **Paper Atlas** (Cut Paper History, Ancient Battles, Empires & Maps).
+   - **Neon Line 2D** (Continuous Cybernetic Glowing Line Art).
+   - **Tall Tale 3D**, **Deep Dive 3D**, **Inside Out**, and 56+ Over-The-Air Plugins.
+   - 10 Curated viral trending topics per style with 1-click script building.
+
+4. **Script Writing Studio & AI Narration:**
+   - AI-powered viral 50-second short script generator with offline fallback.
+   - Editable script studio with duration, word count and coin deduction.
 
 ---
 
-## 📁 Project Structure
+## 🛠️ Build & Architecture
 
-```
-antigem-mini/
-├── .github/workflows/
-│   └── build-apk.yml            # Automated GitHub Actions APK Compiler
-├── app/
-│   ├── src/main/
-│   │   ├── AndroidManifest.xml  # Native App Manifest & Permissions
-│   │   ├── java/com/antigem/mini/
-│   │   │   ├── MainActivity.java    # Native Android WebView & Tilt Sensor
-│   │   │   └── WebAppInterface.java # Android Haptics & System Bridge
-│   │   └── assets/
-│   │       ├── index.html       # AntiGem Interface
-│   │       ├── app.js           # 2D Antigravity Canvas & Physics Loop
-│   │       ├── python-engine.js # Python 2D Animation Runtime
-│   │       └── style.css        # AntiGem Dark Theme Styling
-│   └── build.gradle             # Android Module Configuration
-├── build.gradle                 # Project Gradle Build Script
-├── settings.gradle
-└── gradlew                      # Gradle Wrapper Script
-```
+- **Platform:** Native Android (Kotlin + Jetpack Compose)
+- **Embedded Engine:** HTTP Core Server on `127.0.0.1:4500`
+- **Build System:** Gradle with Automated GitHub Actions Workflow

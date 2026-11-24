@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "665784576116",
+    "project_id": "autoshortsai-15b91",
+    "storage_bucket": "autoshortsai-15b91.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:665784576116:android:6d8a77fc288aa0fb000921",
+        "android_client_info": {
+          "package_name": "com.autoshorts.pro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBHvSn-0CJ3k3Z1J8v9AdtDtS1YYKB-iE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

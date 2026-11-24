@@ -12,6 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
-rootProject.name = "AntiGemMini"
-include ':app'
+rootProject.name = "autoshorts"
+include(":app")
